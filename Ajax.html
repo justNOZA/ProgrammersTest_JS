@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script src="http://code.jquery.com/jquery-latest.min.js" ></script>
+    <title>Ajax</title>
+  </head>
+  <body>
+    //서버
+    <script type="text/javascript">
+
+$.ajax({url:'insert1', type:'POST', data:{name: name, age: age, phone: phone}, //name: 홍길동 이렇게 가는거다
+  success: function(){
+    alert('저장ㅇㅋ');
+    $('#name1').val('');
+    $('#age1').val('');
+    $('#phone1').val('');
+  },
+  error:function(e){
+    alert(JSON.stringify(e));
+    }
+  });
+}
+/* function success1(){
+  alert('저장 되었습니다');
+
+  name.value = '';//입력커서 자동으로 지워버림
+  age.value = '';//입력커서 자동으로 지워버림
+  phone.value = '';//입력커서 자동으로 지워버림
+  //name.focus();   //입력커서에 자동으로 돌아옴
+
+}	*/
+///////////////////////////////////////////////객체로 넘기기//////////////////////////////////////////////////////
+///////////////////////////////////////////////객체로 넘기기//////////////////////////////////////////////////////
+///////////////////////////////////////////////formButton2222222222222222222222/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////formButton2222222222222222222222/////////////////////////////////////////////////////////////////
+function formSubmit2(){
+  //여기서 vo의 person 객체로 가기 위해   var 변수로 vo와  변수명 통일함
+  var name = $('#name2').val();  //id가 name인
+  var age = $('#age2').val();
+  var phone = $('#phone2').val();
+
+  //서버
+  $.ajax({url:'insert2', type:'POST', data:{name: name, age: age, phone: phone}, //name: 홍길동 이렇게 가는거다
+    success: function(){
+      alert('person 객체로 저장ㅇㅋ');
+      $('#name2').val('');
+      $('#age2').val('');
+      $('#phone2').val('');
+    },
+    error:function(e){
+      alert(JSON.stringify(e));
+      }
+    });
+  }
+
+//////////////////////////////////////////writeForm3 폼을 그대로 보내서 저장ㅇㅋ//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////writeForm3 폼을 그대로 보내서 저장ㅇㅋ//////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////formButton333333333333333333333/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////formButton333333333333333333333/////////////////////////////////////////////////////////////////
+function formSubmit3(){
+  //여기서 vo의 person 객체로 가기 위해   var 변수로 vo와  변수명 통일함
+  //var name = $('#name3').val();  //id가 name인
+  //var age = $('#age3').val();
+  //var phone = $('#phone3').val();
+
+
+  //서버
+  $.ajax({url:'insert3', type:'POST', data:$('#writeForm3').serialize(),
+    success: function(){
+      alert('writeForm3 인 Form을 그대로 보내서 저장ㅇㅋ');
+      $('#name3').val('');	//여기서 ajaxcontroller 에서 3번을 객체로 받고싶으면 name3에서 3을 지운다. vo와 동일한 객체명으로 쓰기
+      $('#age3').val('');
+      $('#phone3').val('');
+    },
+    error:function(e){
+      alert(JSON.stringify(e));
+      }
+    });
+  }
+
+//무조건 dataType:'text' 로 꼭 읽어서 객체와 배열의 관계를 잘 알아두기. 그리고 나서 json으로 정리해야함
+//url:'jsontest' 동일. 즉 컨트롤러의 메소드는 하나
+///////////////////////////////////////////////이름, 나이, 번호 받기 from 컨트롤러444444444444/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////이름, 나이, 번호 받기 from 컨트롤러444444444444/////////////////////////////////////////////////////////////////
+function getJson4(){
+  $.ajax({
+    url:'jsontest', type:'get', dataType:'text',
+    success:function(ob){
+      $('#outputDiv4').html(ob);
+    },
+    error:function(er){
+      alert(JSON.stringify(e));
+
+    }
+  });
+}
+//url:'jsontest' 동일. 즉 컨트롤러의 메소드는 하나
+///////////////////////////////////////////////이름, 나이, 번호 받기 from 컨트롤러555555555555/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////이름, 나이, 번호 받기 from 컨트롤러555555555555/////////////////////////////////////////////////////////////////
+function getJson5(){
+  $.ajax({
+    url:'jsontest', type:'get', dataType:'json',
+    success:function(ob){
+//오브젝트가 하나일때는 ob하나만 써서 꺼내면 되지만, 오브젝트 속성이 여러개일때는 하나하나 꺼내서 쓴다
+      var str = '이름은' + ob.name;
+      str += ' 나이는' + ob.age;
+      str += ' 번호는' + ob.phone;
+      $('#outputDiv5').html(str);
+    },
+    error:function(er){
+      alert(JSON.stringify(e));
+
+    }
+  });
+}
+//url:'jsontest' 동일. 즉 컨트롤러의 메소드는 하나
+///////////////////////////////////////////////이름, 나이, 번호 받기 from 컨트롤러6666666666666/////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////이름, 나이, 번호 받기 from 컨트롤러6666666666666/////////////////////////////////////////////////////////////////
+
+function getJson6(){
+  $.ajax({
+    url:'jsontest', type:'get', dataType:'json',
+    success:function(ob){
+//오브젝트가 하나일때는 ob하나만 써서 꺼내면 되지만, 오브젝트 속성이 여러개일때는 하나하나 꺼내서 쓴다
+      var str = '<table border=1><tr><th>이름</th><th>나이</th><th>번호</th></tr>' + '<tr><td>' + ob.name + '</td>';
+      str += ' <td>' + ob.age + '</td>';
+      str += ' <td>' + ob.phone; + '</td></tr>';
+      $('#outputDiv6').html(str);
+    },
+    error:function(er){
+      alert(JSON.stringify(e));
+
+    }
+  });
+}
+
+</script>
+
+<h1>[Ajax2 서버와 통신2]</h1>
+
+<p>1. 서버로 각각의 parameter를 전달 11111111111111111</p>
+
+<!-- <from id="writeForm1" action="insert1" method="post> 이렇게 하면 이페이지를 완전히 더나게 된다.  -->
+<form id="writeForm1" >
+이름<input type="text" id="name1"><br>
+나이<input type="text" id="age1"><br>
+전화<input type="text" id="phone1"><br>
+<input type="button" id="formButton1" value="저장"><br>
+</form>
+
+
+<p>2. 서버로 각각의 parameter를 전달 22222222222222222 VO 클래스 객체방식</p>
+
+<!-- <from id="writeForm1" action="insert1" method="post> 이렇게 하면 이페이지를 완전히 더나게 된다.  -->
+<form id="writeForm2" >
+이름<input type="text" id="name2"><br>
+나이<input type="text" id="age2"><br>
+전화<input type="text" id="phone2"><br>
+<input type="button" id="formButton2" value="저장"><br>
+</form>
+
+
+<p>2. 서버로 각각의 parameter를 전달 33333333333333333 wirteForm3 을 그대로 넘겨서 전달</p>
+
+<!-- <from id="writeForm1" action="insert1" method="post> 이렇게 하면 이페이지를 완전히 더나게 된다.  -->
+<form id="writeForm3" >
+이름<input type="text" id="name3" name="name3"><br>  <!-- //여기서 ajaxcontroller 에서 3번을 객체로 받고싶으면 name3에서 3을 지운다. vo와 동일한 객체명으로 쓰기 -->
+나이<input type="text" id="age3" name="age3"><br>
+전화<input type="text" id="phone3" name="phone3"><br>
+<input type="button" id="formButton3" value="저장"><br>
+</form>
+
+
+<p> 4.서버에서 문자열 받기</p>
+<input type="button" id ="bt4" value="실행4"><br>
+<div id="outputDiv4"></div>
+
+<p> 5.서버에서 문자열 받기</p>
+<input type="button" id ="bt5" value="실행5"><br>
+<div id="outputDiv5"></div>
+
+
+<p> 6.표로 만들어 문자열 받기</p>
+<input type="button" id="bt6" value="실행6"><br>
+<div id="outputDiv6"></div>
+
+
+</body>
+</html>
